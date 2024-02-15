@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Web scraping</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css"
+    referrerpolicy="no-referrer" />
+
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+
+  <h1 class="bg-blue-500  text-xl  text-center text-white p-4 mb-5"><span
+      class="text-blue-500 bg-white p-2 font-bold rounded uppercase">Amazon</span> Vs <span
+      class="text-red-500 bg-white p-2 font-bold rounded uppercase">Ebay</span> Smart Phone Price</h1>
+  <div class="flex w-full flex-wrap">
+    <div class="p-5 w-full sm:w-1/2">
+      <h1 class="bg-blue-500 font-bold text-xl  text-center text-white p-4 mb-5">Amazon Smartphone Pricing Trends</h1>
+      <canvas id="priceChart"></canvas>
+    </div>
+    <div class="p-5 w-full sm:w-1/2">
+      <h1 class="bg-yellow-600 font-bold text-xl  text-center text-white p-4 mb-5">E-Bay Smartphone Pricing Trends</h1>
+      <canvas id="priceChart2"></canvas>
+    </div>
+
+    <div class="p-5 w-full sm:w-1/2">
+      <h1 class="bg-green-600 font-bold text-xl  text-center text-white p-4 mb-5">Jumia Smartphone Pricing Trends</h1>
+      <canvas id="priceChart3"></canvas>
+    </div>
+  </div>
+  <div class="bg-blue-500 font-bold text-xl text-white sticky bottom-0 w-full text-center p-4">
+    Done By Break out Room 4
+  </div>
+  <script>
+    $(document).ready(function () {
+
+      // Fetch Amazon data
+      $.getJSON('../amazon_smartphone_data.json', function (data) {
+        renderChartAmazon(data);
+      });
+      // Fetch Ebay Data
+      $.getJSON('../ebay_smartphone_data.json', function (data) {
+        renderChartEbay(data);
+      });
+      $.getJSON('../Jumia_smartphone_data.json', function (data) {
+        renderChartJumia(data);
+      });
+    });
+
+    function renderChartEbay(smartphoneData) {
+      const chartOptions = {
+        scales: {
+          x: {
+            title: {
+              display: true,
+              text: 'Ebay Smartphone Pricing'
+            },
+            ticks: {
+              font: {
+                style: 'italic'
+              },
+              callback: function (value, index, values) {
+                return value;
+              }
+            }
+          },
+          y: {
+            title: {
+              display: true,
+              text: 'Price in (USD)'
+            },
+            beginAtZero: false,
+            ticks: {
+              stepSize: 50,
+              callback: function (value, index, values) {
+                return '$' + value;
+              }
+            }
+          }
+        },
+        plugins: {
+
+          legend: {
+            display: true,
+            position: 'bottom'
+          },
+          tooltip: {
+            enabled: true,
+            mode: 'nearest',
+            intersect: false,
+            callbacks: {
+              label: function (context) {
+                return 'Price: $' + context.parsed.y;
+              }
+            }
+          },
+          zoom: {
+            pan: {
+              enabled: true,
+              mode: 'x'
+            },
+            zoom: {
+              wheel: {
+                enabled: true
+              },
+              mode: 'xy'
+            }
+          }
+        }
+      };
+
+      const smartphoneNames = smartphoneData.map(item => item.name);
+      const smartphonePrices = smartphoneData.map(item => {
+        return item.price.includes('$') ? parseFloat(item.price.replace('$', '')) : 0;
+      });
+      const smartphoneDates = smartphoneData.map(item => item.date); // Extract dates
+
+      var ctx = document.getElementById('priceChart2').getContext('2d');
+      var priceChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: smartphoneNames.map((name, index) => name + ' \n Date Scraped: ' + smartphoneDates[index]),
+          datasets: [{
+            label: 'E-bay Smartphone Prices',
+            data: smartphonePrices,
+            borderColor: 'orange',
+            backgroundColor: '#FF8C00',
+          }]
+        },
+        options: chartOptions
+      });
+    }
+
+
+
+    function renderChartAmazon(smartphoneData) {
+
+      const chartOptions = {
+        scales: {
+          x: {
+            title: {
+              display: true,
+              text: 'Amazon Smartphone Pricing'
+            },
+            ticks: {
+
+              font: {
+                style: 'italic'
+              },
+              callback: function (value, index, values) {
+                return value;
+                y
+              }
+            }
+          },
+          y: {
+            title: {
+              display: true,
+              text: 'Price in (USD)'
+            },
+            beginAtZero: false,
+            ticks: {
+
+              stepSize: 50,
+              callback: function (value, index, values) {
+
+                return '$' + value;
+              }
+            }
+          }
+        },
+        plugins: {
+          legend: {
+            display: true,
+            position: 'bottom'
+          },
+          tooltip: {
+            enabled: true,
+            mode: 'nearest',
+            intersect: false,
+            callbacks: {
+              label: function (context) {
+
+                return 'Price: $' + context.parsed.y;
+              }
+            }
+          },
+          zoom: {
+            pan: {
+              enabled: true,
+              mode: 'x'
+            },
+            zoom: {
+              wheel: {
+                enabled: true
+              },
+              mode: 'xy'
+            }
+          }
+        }
+      };
+
+
+
+
+      const smartphoneNames = smartphoneData.map(item => item.name);
+      const smartphonePrices = smartphoneData.map(item => {
+
+        return item.price.includes('$') ? parseFloat(item.price.replace('$', '')) : 0;
+      });
+
+      const smartphoneDates = smartphoneData.map(item => item.date); // Extract dates
+
+      var ctx = document.getElementById('priceChart').getContext('2d');
+      var priceChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: smartphoneNames.map((name, index) => name + ' \n Date Scraped: ' + smartphoneDates[index]),
+          datasets: [{
+            label: 'Amazon Smartphone Prices',
+            data: smartphonePrices,
+            borderColor: 'blue',
+            backgroundColor: 'darkblue',
+          }]
+        },
+        options: chartOptions
+      });
+    }
+
+
+
+    function renderChartJumia(smartphoneData) {
+
+      const chartOptions = {
+        scales: {
+          x: {
+            title: {
+              display: true,
+              text: 'Jumia Smartphone Pricing'
+            },
+            ticks: {
+
+              font: {
+                style: 'italic'
+              },
+              callback: function (value, index, values) {
+                return value;
+                y
+              }
+            }
+          },
+          y: {
+            title: {
+              display: true,
+              text: 'Price in (Neira)'
+            },
+            beginAtZero: false,
+            ticks: {
+
+              stepSize: 50,
+              callback: function (value, index, values) {
+
+                return '₦ ' + value;
+              }
+            }
+          }
+        },
+        plugins: {
+          legend: {
+            display: true,
+            position: 'bottom'
+          },
+          tooltip: {
+            enabled: true,
+            mode: 'nearest',
+            intersect: false,
+            callbacks: {
+              label: function (context) {
+
+                return 'Price: ₦ ' + context.parsed.y;
+              }
+            }
+          },
+          zoom: {
+            pan: {
+              enabled: true,
+              mode: 'x'
+            },
+            zoom: {
+              wheel: {
+                enabled: true
+              },
+              mode: 'xy'
+            }
+          }
+        }
+      };
+
+
+
+
+      const smartphoneNames = smartphoneData.map(item => item.name);
+      const smartphonePrices = smartphoneData.map(item => {
+
+        return item.price.includes('₦') ? parseFloat(item.price.replace('₦', '').replace(',', '')) : 0;
+
+      });
+
+      const smartphoneDates = smartphoneData.map(item => item.date); // Extract dates
+
+      var ctx = document.getElementById('priceChart3').getContext('2d');
+      var priceChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: smartphoneNames.map((name, index) => name + ' \n Date Scraped: ' + smartphoneDates[index]),
+          datasets: [{
+            label: 'Jumia Smartphone Prices',
+            data: smartphonePrices,
+            borderColor: 'green',
+            backgroundColor: 'darkgreen',
+          }]
+        },
+        options: chartOptions
+      });
+    }
+
+  </script>
+
+</body>
+
+</html>
