@@ -1,6 +1,6 @@
 # Web Scraping and Data Visualization Project
 
-This project enables web scraping and data visualization for various e-commerce websites.
+This project enables web scraping and data visualization for various e-commerce websites with JS and JQuery for visualization.
 
 ## Usage
 
@@ -30,8 +30,12 @@ node ebay.js
 node jumia.js
 ```
 
-If you encounter any errors during this step, please ensure that you have Node.js installed on your system. You can install Node.js and its dependencies by running:
+If you encounter any errors during this step, please ensure that you have Node.js installed on your system. You can install Node.js and its dependencies by following these steps:
 
+**Install Node.js:**
+[Download Node.js from this URL](https://nodejs.org/en)
+
+**Install dependencies:**
 ```
 npm install
 ```
@@ -40,6 +44,5 @@ npm install
 
 After running the test scripts successfully, you can run the `index.html` file to visualize the scraped data.
 
----
+## Done by Breakout Room 4
 
-Feel free to modify and expand upon these instructions as needed for your project documentation.
