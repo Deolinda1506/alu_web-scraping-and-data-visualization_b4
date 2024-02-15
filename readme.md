@@ -2,6 +2,10 @@
 
 This project enables web scraping and data visualization for various e-commerce websites with JS and JQuery for visualization.
 
+### screen Shot For App
+![image](https://github.com/Deolinda1506/alu_web-scraping-and-data-visualization_b4/assets/141139366/3f39fb9d-f531-40bb-b2f5-407d70caa129)
+
+
 ## Usage
 
 ### Step 1: Clone the Repository
