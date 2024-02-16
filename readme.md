@@ -10,7 +10,7 @@ This project enables web scraping and data visualization for various e-commerce 
 
 ### Step 1: Clone the Repository
 
-Clone the repository from GitHub:
+Clone the repository from GitHub using the link below:
 
 ```
 git clone https://github.com/Deolinda1506/alu_web-scraping-and-data-visualization_b4
