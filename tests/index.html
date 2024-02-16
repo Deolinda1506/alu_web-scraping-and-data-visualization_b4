@@ -37,7 +37,7 @@
       <canvas id="priceChart3"></canvas>
     </div>
   </div>
-  <div class="bg-blue-500 font-bold text-xl text-white sticky bottom-0 w-full text-center p-4">
+  <div class="bg-blue-500 font-bold text-xl text-white  bottom-0 w-full text-center p-4">
     Done By Break out Room 4
   </div>
   <script>
@@ -126,7 +126,7 @@
 
       var ctx = document.getElementById('priceChart2').getContext('2d');
       var priceChart = new Chart(ctx, {
-        type: 'line',
+        type: 'bar',
         data: {
           labels: smartphoneNames.map((name, index) => name + ' \n Date Scraped: ' + smartphoneDates[index]),
           datasets: [{
